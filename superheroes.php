@@ -1,5 +1,6 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/html');
 $superheroes = [
   [
       "id" => 1,
@@ -63,10 +64,29 @@ $superheroes = [
   ], 
 ];
 
+
+$query = isset($_GET['query']) ? trim($_GET['query']) : '';
+
+
+
+if ($query !== '') {
+    // Search for a specific superhero by name or alias
+    $filteredSuperheroes = array_filter($superheroes, function ($superhero) use ($query) {
+        return stripos($superhero['name'], $query) !== false || stripos($superhero['alias'], $query) !== false;
+    });
+
+    echo json_encode(array_values($filteredSuperheroes));
+} else {
+    // Return the original list of superheroes
+    echo json_encode($superheroes);
+}
 ?>
+
+
 
 <ul>
 <?php foreach ($superheroes as $superhero): ?>
   <li><?= $superhero['alias']; ?></li>
 <?php endforeach; ?>
 </ul>
+
