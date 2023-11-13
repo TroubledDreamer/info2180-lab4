@@ -12,7 +12,7 @@ function fetchSuper(){
         // Update the HTML
         const superheroesList = document.getElementById('superheroes-list');
         console.log(data);
-        superheroesList.innerHTML = data;
+        alert(data);
 
     
     })
